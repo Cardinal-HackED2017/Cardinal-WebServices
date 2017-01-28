@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS Meetings;
+DROP TABLE IF EXISTS Meeting_Times;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Messages;
+DROP TABLE IF EXISTS Attendees;
+
 CREATE TABLE Meetings(
     meeting_id uuid
     ,name text
