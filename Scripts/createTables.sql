@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS Meetings CASCADE;
+DROP TABLE IF EXISTS Meeting_Times CASCADE;
+DROP TABLE IF EXISTS Users CASCADE;
+DROP TABLE IF EXISTS Messages CASCADE;
+DROP TABLE IF EXISTS Attendees CASCADE;
+
 CREATE TABLE Meetings(
     meeting_id uuid
     ,name text
@@ -12,7 +18,8 @@ CREATE TABLE Meetings(
 );
 
 CREATE TABLE Meeting_Times (
-    start_time timestamp
+    meeting_time_id uuid
+    ,start_time timestamp
     ,meeting_id uuid
     ,PRIMARY KEY(start_time, meeting_id)
     ,FOREIGN KEY (meeting_id) REFERENCES Meetings ON DELETE CASCADE

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using cardinal_webservices.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cardinal_webservices.Controllers
@@ -9,11 +10,18 @@ namespace cardinal_webservices.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private readonly ICardinalDataService _cardinalDataService;
+
+        public ValuesController(ICardinalDataService cardinalDataService) 
+        {
+            _cardinalDataService = cardinalDataService;
+        }
+
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Test> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _cardinalDataService.GetTestItems();
         }
 
         // GET api/values/5

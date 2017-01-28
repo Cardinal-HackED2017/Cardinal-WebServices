@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using cardinal_webservices.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace cardinal_webservices
 {
@@ -27,6 +29,16 @@ namespace cardinal_webservices
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connString = Configuration["SQL_DATABASE_CONNECTION_STRING"];
+            services.AddDbContext<CardinalDbContext>(options =>
+                options.UseNpgsql(
+                    connString,
+                    b => b.MigrationsAssembly("AspNet5MultipleProject")
+                )
+            );
+
+            services.AddScoped<ICardinalDataService, CardinalDataService>();
+
             // Add framework services.
             services.AddMvc();
         }
