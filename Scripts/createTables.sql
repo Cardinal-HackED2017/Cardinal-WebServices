@@ -12,7 +12,8 @@ CREATE TABLE Meetings(
 );
 
 CREATE TABLE Meeting_Times (
-    start_time timestamp
+    meeting_time_id uuid
+    ,start_time timestamp
     ,meeting_id uuid
     ,PRIMARY KEY(start_time, meeting_id)
     ,FOREIGN KEY (meeting_id) REFERENCES Meetings ON DELETE CASCADE
