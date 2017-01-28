@@ -22,6 +22,7 @@ namespace cardinal_webservices
                 .UseConfiguration(config)
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseUrls("http://0.0.0.0:8080/")
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
