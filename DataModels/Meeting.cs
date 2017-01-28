@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cardinal_webservices.DataModels 
 {
+    [Table("Meetings")]
     public class Meeting 
     {
         [Key, Column("meeting_id")]
