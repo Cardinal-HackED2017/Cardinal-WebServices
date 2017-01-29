@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS Attendees CASCADE;
 
 CREATE TABLE Meetings(
     meeting_id text
+    ,creator_id text
     ,name text
     ,description text
     ,create_time timestamp
@@ -18,6 +19,7 @@ CREATE TABLE Meetings(
     ,latitude real 
     ,location_description text
     ,PRIMARY KEY(meeting_id)
+    ,FOREIGN KEY (creator_id) REFERENCES Users ON DELETE CASCADE
 );
 
 CREATE TABLE Meeting_Times (

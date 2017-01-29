@@ -25,7 +25,7 @@ namespace cardinal_webservices.Controllers
             var cardinalSocket = new CardinalWebSocket(this.GetCallingUserId(), webSocket);
             _eventManager.AddCardinalWebSocket(cardinalSocket);
 
-            await cardinalSocket.ReceiveWhileConnectionIsOpen();
+            await cardinalSocket.ReceiveWhileConnectionIsOpenAsync();
         }
     }
 }
