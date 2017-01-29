@@ -56,7 +56,6 @@ namespace cardinal_webservices
                         Id = Guid.NewGuid().ToString(),
                         MeetingId = meetingId,
                         StartTime = startTime,
-                        length = meeting.Length
                     });
                     numMeetings--;
                     startTime.Add(meeting.Length);
