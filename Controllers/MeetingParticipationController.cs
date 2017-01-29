@@ -32,7 +32,7 @@ namespace cardinal_webservices.Controllers
         public async Task<IActionResult> JoinMeeting([FromBody] MeetingParticipation meetingParticipation, string meetingid) 
         {
             meetingParticipation.MeetingId = meetingid;
-            meetingParticipation.UserId = this.GetCallingUser().Id;
+            meetingParticipation.UserId = this.GetCallingUserId();
 
             await _cardinalDataService.UpsertMeetingParticipationAsync(meetingParticipation);
 

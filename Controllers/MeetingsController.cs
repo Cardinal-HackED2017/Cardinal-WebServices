@@ -21,7 +21,7 @@ namespace cardinal_webservices.Controllers
         public IEnumerable<Meeting> GetMeetings()
         {
             var myMeetingIds = _cardinalDataService.GetMeetingParticipations()
-                                                   .Where(p => p.UserId == this.GetCallingUser().Id)
+                                                   .Where(p => p.UserId == this.GetCallingUserId())
                                                    .Select(p => p.MeetingId);
 
             return _cardinalDataService.GetMeetings()
