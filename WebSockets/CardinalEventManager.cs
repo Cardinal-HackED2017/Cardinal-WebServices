@@ -19,6 +19,13 @@ namespace cardinal_webservices.WebSockets
             _cardinalDataService = cardinalDataService;   
         }
         
+        private bool IsUserInMeeting(string userId, string meetingId) 
+        {
+            return _cardinalDataService.GetMeetingParticipations()
+                                       .Where(p => p.UserId == userId && p.MeetingId == meetingId)
+                                       .Any();
+        }
+
         public async void OnMessageCreated(Message message) 
         {
             var sendTasks = _sockets.Where(s => IsUserInMeeting(s.UserId, message.MeetingId))
@@ -35,11 +42,9 @@ namespace cardinal_webservices.WebSockets
             await Task.WhenAll(sendTasks);
         }
 
-        private bool IsUserInMeeting(string userId, string meetingId) 
+        public async void OnMeetingTimesUpdated(string meetingId) 
         {
-            return _cardinalDataService.GetMeetingParticipations()
-                                       .Where(p => p.UserId == userId && p.MeetingId == meetingId)
-                                       .Any();
+
         }
     }
 }
