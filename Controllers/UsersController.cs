@@ -10,8 +10,6 @@ namespace cardinal_webservices.Controllers
 {
     public class UsersController : Controller
     {
-        //The null uuid
-        private string NUUID = "6f2241ae-da64-4aa8-a414-308d8f900057";
         private readonly ICardinalDataService _cardinalDataService;
 
         public UsersController(ICardinalDataService cardinalDataService) 

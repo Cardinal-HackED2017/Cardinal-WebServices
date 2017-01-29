@@ -12,7 +12,6 @@ namespace cardinal_webservices.Controllers
     {
         private readonly ICardinalDataService _cardinalDataService;
         //The null uuid
-        private string NUUID = "6f2241ae-da64-4aa8-a414-308d8f900057"; // tier 1
         public MeetingParticipationController(ICardinalDataService cardinalDataService) 
         {
             _cardinalDataService = cardinalDataService;
@@ -32,13 +31,21 @@ namespace cardinal_webservices.Controllers
         [HttpPost("meetings/{meetingid}/join")]
         public async Task<IActionResult> JoinMeeting(string meetingid) 
         {
+            var userId = this.GetCallingUserId();
             var meetingParticipation = new MeetingParticipation 
             {
                 MeetingId = meetingid,
-                UserId = this.GetCallingUserId()
+                UserId = userId
             };
+            
+            var alreadyInMeeting = _cardinalDataService.GetMeetingParticipations()
+                                                       .Where(m => m.MeetingId == meetingid)
+                                                       .Any();
 
-            await _cardinalDataService.UpsertMeetingParticipationAsync(meetingParticipation);
+            if(!alreadyInMeeting)
+            {
+                await _cardinalDataService.UpsertMeetingParticipationAsync(meetingParticipation);
+            }
 
             return Created("meeting", meetingParticipation);
         }
