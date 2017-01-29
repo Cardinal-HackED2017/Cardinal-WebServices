@@ -75,7 +75,7 @@ namespace cardinal_webservices.Data
                                                              .Select(p => p.UserId)
                                                              .ToList();
             
-            return GetUsers().Where(u => userIdsInMeeting.Contains(u.Id));
+            return GetUsers().Where(u => userIdsInMeeting.Contains(u.Id)).ToList();
         }
 
         public IEnumerable<Meeting> GetMeetingsForUser(string userId) 
@@ -84,7 +84,7 @@ namespace cardinal_webservices.Data
                                                              .Select(p => p.MeetingId)
                                                              .ToList();
 
-            return GetMeetings().Where(m =>meetingIdsForuser.Contains(m.Id));
+            return GetMeetings().Where(m =>meetingIdsForuser.Contains(m.Id)).ToList();
         }
     }
 }
