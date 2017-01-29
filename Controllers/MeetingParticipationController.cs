@@ -39,7 +39,7 @@ namespace cardinal_webservices.Controllers
             };
             
             var alreadyInMeeting = _cardinalDataService.GetMeetingParticipations()
-                                                       .Where(m => m.MeetingId == meetingid)
+                                                       .Where(m => m.MeetingId == meetingid && m.UserId == userId)
                                                        .Any();
 
             if(!alreadyInMeeting)
