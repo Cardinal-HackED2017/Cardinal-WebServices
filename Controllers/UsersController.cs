@@ -30,7 +30,7 @@ namespace cardinal_webservices.Controllers
 
             if (DoesUserExist(userId)) 
             {
-                return Ok();
+                return NoContent();
             }
 
             user.Id = this.GetCallingUserId();
