@@ -27,6 +27,14 @@ namespace cardinal_webservices.WebSockets
             await Task.WhenAll(sendTasks);
         }
 
+        public async void OnUserJoined(User user, Meeting meeting)
+        {
+            var sendTasks = _sockets.Where( s=> IsUserInMeeting(s.UserId, meeting.Id))
+                                    .Select(s => s.SendObjectAsync(UserJoinedEvent.FromUser(user)));
+
+            await Task.WhenAll(sendTasks);
+        }
+
         private bool IsUserInMeeting(string userId, string meetingId) 
         {
             return _cardinalDataService.GetMeetingParticipations()
