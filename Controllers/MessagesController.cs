@@ -10,6 +10,8 @@ namespace cardinal_webservices.Controllers
 {
     public class MessagesController : Controller
     {
+        //The null uuid
+        private string NUUID = "6f2241ae-da64-4aa8-a414-308d8f900057";
         private readonly ICardinalDataService _cardinalDataService;
 
         public MessagesController(ICardinalDataService cardinalDataService) 
@@ -29,8 +31,8 @@ namespace cardinal_webservices.Controllers
         {
             message.MessageId = Guid.NewGuid().ToString();
             message.CreatedTime = DateTime.Now;
-            message.UserId = null;
-            message.MeetingId = null;
+            message.UserId = NUUID;
+            message.MeetingId = NUUID;
             await _cardinalDataService.UpsertMessageAsync(message);
 
             return Created("message", message);
