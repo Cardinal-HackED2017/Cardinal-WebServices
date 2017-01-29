@@ -41,6 +41,7 @@ namespace cardinal_webservices
             services.AddScoped<ICardinalDataService, CardinalDataService>();
 
             // Add framework services.
+            services.AddCors();
             services.AddMvc();
         }
 
