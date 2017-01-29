@@ -12,17 +12,20 @@ namespace cardinal_webservices.Controllers
     {
         private readonly ICardinalDataService _cardinalDataService;
         //The null uuid
-        private string NUUID = "6f2241ae-da64-4aa8-a414-308d8f900057";
+        private string NUUID = "6f2241ae-da64-4aa8-a414-308d8f900057"; // tier 1
         public MeetingParticipationController(ICardinalDataService cardinalDataService) 
         {
             _cardinalDataService = cardinalDataService;
         }
 
         [HttpGet("meetings/{meetingid}/participants")]
-        public IEnumerable<MeetingParticipation> GetMeetingParticipation(string meetingid)
+        public IEnumerable<User> GetMeetingParticipation(string meetingid)
         {
-            return _cardinalDataService.GetMeetingParticipations()
-                                        .Where(x => x.MeetingId.Equals(meetingid));
+            var userIds =  _cardinalDataService.GetMeetingParticipations()
+                                               .Select(p => p.UserId);
+
+            return _cardinalDataService.GetUsers()
+                                       .Where(u => userIds.Contains(u.Id));
         }
 
         [HttpPost("meetings/{meetingid}/join")]
