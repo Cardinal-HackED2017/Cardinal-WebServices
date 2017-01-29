@@ -96,6 +96,13 @@ namespace cardinal_webservices.Data
             await _cardinalDbContext.SaveChangesAsync();
         }
 
+        public async Task UpsertUserEventAsync(UserEvent userEvent) 
+        {
+            _cardinalDbContext.UserEvents.Add(userEvent);
+            await _cardinalDbContext.SaveChangesAsync();
+        }
+
+
         public async Task DeleteInvitationAsync(string invitationId) 
         {
             var invitation = _cardinalDbContext.Invitations.Where(i => i.InvitationId == invitationId).FirstOrDefault();

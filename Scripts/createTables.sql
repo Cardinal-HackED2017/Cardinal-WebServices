@@ -33,6 +33,7 @@ CREATE TABLE Meetings(
 CREATE TABLE Meeting_Times (
     meeting_time_id text
     ,start_time timestamp
+    ,length interval
     ,meeting_id text
     ,PRIMARY KEY(start_time, meeting_id)
     ,FOREIGN KEY (meeting_id) REFERENCES Meetings ON DELETE CASCADE
@@ -75,13 +76,4 @@ CREATE TABLE Events (
     ,PRIMARY KEY (event_id)
     ,FOREIGN KEY (meeting_id) REFERENCES Meetings
     ,FOREIGN KEY (user_id) REFERENCES Users
-);
-
-CREATE TABLE Gaps (
-    gap_id text
-    ,meeting_id text
-    ,start timestamp
-    ,length interval
-    ,PRIMARY KEY (gap_id)
-    ,FOREIGN KEY (meeting_id) REFERENCES Meetings
 );

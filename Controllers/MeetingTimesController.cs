@@ -11,8 +11,6 @@ namespace cardinal_webservices.Controllers
     public class MeetingTimesController : Controller
     {
         private readonly ICardinalDataService _cardinalDataService;
-        //The null uuid
-        private string NUUID = "6f2241ae-da64-4aa8-a414-308d8f900057";
         public MeetingTimesController(ICardinalDataService cardinalDataService) 
         {
             _cardinalDataService = cardinalDataService;
@@ -30,7 +28,7 @@ namespace cardinal_webservices.Controllers
         public async Task<IActionResult> JoinMeeting([FromBody] MeetingTime meetingTime, string meetingid) 
         {
             meetingTime.MeetingId = meetingid;
-            meetingTime.Id = NUUID;
+            meetingTime.Id = Guid.NewGuid().ToString();
 
             await _cardinalDataService.UpsertMeetingTimeAsync(meetingTime);
 

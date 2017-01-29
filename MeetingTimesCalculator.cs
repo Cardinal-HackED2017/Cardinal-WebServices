@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using cardinal_webservices.Data;
 using cardinal_webservices.GoogleCalendar;
 using cardinal_webservices.Models;
+using cardinal_webservices.DataModels;
+using System;
 
 namespace cardinal_webservices 
 {
@@ -20,7 +22,12 @@ namespace cardinal_webservices
         {
             var meeting = _cardinalDataService.GetMeetings().Where(m => m.Id == meetingId).First();
             var userEvents = await GetUserEvents(userId, userCalendarToken);
+            var events = _cardinalDataService.GetUserEvents().Where(e => e.meetingId == meetingId);
 
+            foreach (UserEvent userEvent in events)
+            {
+                await _cardinalDataService.UpsertUserEvent(userEvent);
+            }
             var calendar = new CalendarModel
             {
                     startDate = meeting.StartFence,
@@ -28,8 +35,31 @@ namespace cardinal_webservices
                     dayStart = meeting.dayStart,
                     dayEnd = meeting.dayEnd,
                     lengthOfMeeting = meeting.Length,
-                    events = _cardinalDataService.GetUserEvents().Where(e => e.meetingId == meetingId).Select(e => UserEventModel.UserEventModelFromUserEvent(e)).ToList()
+                    events = events.Select(e => UserEventModel.UserEventModelFromUserEvent(e)).ToList()
             };
+
+            calendar.consolidateEvents();
+            
+            var Gaps = calendar.gaps;
+            DateTime startTime;
+            foreach(TimeSlotModel gap in Gaps)
+            {  
+                int numMeetings =  Convert.ToInt32(Math.Floor(gap.length.TotalMinutes/meeting.Length.TotalMinutes));
+                while(numMeetings > 0)
+                {
+                    startTime = Gaps[numMeetings - 1].start;
+                    await _cardinalDataService.UpsertMeetingTimeAsync(new MeetingTime
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        MeetingId = meetingId,
+                        StartTime = startTime,
+                        length = meeting.Length
+                    });
+                    numMeetings--;
+                    startTime.Add(meeting.Length);
+                }
+            }
+
         }   
 
         private async Task<IEnumerable<UserEventModel>> GetUserEvents(string userId, string userCalendarToken) 
