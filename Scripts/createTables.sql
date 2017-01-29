@@ -7,9 +7,12 @@ DROP TABLE IF EXISTS Attendees CASCADE;
 CREATE TABLE Meetings(
     meeting_id text
     ,name text
+    ,description text
     ,create_time timestamp
     ,start_fence timestamp
     ,end_fence timestamp
+    ,day_start time
+    ,day_end time
     ,length interval
     ,longitude real
     ,latitude real 
