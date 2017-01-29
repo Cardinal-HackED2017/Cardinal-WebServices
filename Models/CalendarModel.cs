@@ -45,6 +45,36 @@ namespace cardinal_webservices.Models
 
         public void consolidateEvents()
         {
+            
+            while(startDate.Date < endDate.Date)
+            {
+                Console.WriteLine(startDate.ToString());
+                addEvent(new UserEventModel
+                {
+                    timeSlot = new TimeSlotModel
+                    {
+                        start = startDate,
+                        length = dayStart
+                    },
+                    name = "Null",
+                    userId = "6f2241ae-da64-4aa8-a414-308d8f900057",
+                    meetingId = "6f2241ae-da64-4aa8-a414-308d8f900057"
+                });
+                var endLen = startDate.AddDays(1).Subtract(startDate.Add(dayEnd));
+                addEvent(new UserEventModel
+                {
+                    timeSlot = new TimeSlotModel
+                    {
+                        start = startDate.Add(dayEnd),
+                        length = new TimeSpan(endLen.Hours, endLen.Minutes, endLen.Seconds)
+                    },
+                    name = "Null",
+                    userId = "6f2241ae-da64-4aa8-a414-308d8f900057",
+                    meetingId = "6f2241ae-da64-4aa8-a414-308d8f900057"
+                });
+                startDate = startDate.AddDays(1);
+            }
+
             var tempEvents = (events.OrderByDescending(x => x.timeSlot.start)
                                                                     .Select(x => x.timeSlot).ToList());
             
@@ -138,12 +168,15 @@ namespace cardinal_webservices.Models
                 }
             }
         }
-        /*
-        public void testConsolidation()
+        
+       /* public void testConsolidation()
         {
             this.dayStart = new TimeSpan(8, 0, 0);// 8:00 a,
             this.dayEnd = new TimeSpan(18,0,0);
             this.lengthOfMeeting = new TimeSpan(2,0,0);
+            this.endDate = new DateTime(2017,01,30);
+            this.startDate = new DateTime(2017,01,23);
+            this.lengthOfMeeting = new TimeSpan(1,0,0);
             TimeSlotModel timeSlottest = new TimeSlotModel{
                 start = DateTime.Now,
                 length = new TimeSpan(2,0,0) // 2 hours
