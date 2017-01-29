@@ -9,7 +9,7 @@ namespace cardinal_webservices.Models
 
         public string email {get; set;}
 
-        public Guid id {get; set;}
+        public string id {get; set;}
 
         public UserModel(User user)
         {
