@@ -24,7 +24,7 @@ namespace cardinal_webservices.Controllers
         }
 
         [HttpPost("meetings")]
-        public async Task<IActionResult> CreateMeeting(Meeting meeting) 
+        public async Task<IActionResult> CreateMeeting([FromBody] Meeting meeting) 
         {
             meeting.Id = Guid.NewGuid().ToString();
             meeting.CreatedTime = DateTime.Now;
