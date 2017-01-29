@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
+using cardinal_webservices.Models;
 
 namespace cardinal_webservices
 {
@@ -13,6 +14,8 @@ namespace cardinal_webservices
     {
         public static void Main(string[] args)
         {
+            var testCal = new CalendarModel();
+            testCal.testConsolidation();
             var config = new ConfigurationBuilder()
                 .AddCommandLine(args)
                 .AddEnvironmentVariables(prefix: "ASPNETCORE_")
