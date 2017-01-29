@@ -45,6 +45,11 @@ namespace cardinal_webservices.Data
             return _cardinalDbContext.Invitations;
         }
 
+        public IEnumerable<UserEvent> GetUserEvents() 
+        {
+            return _cardinalDbContext.UserEvents;
+        }
+
         public async Task UpsertMeetingAsync(Meeting meeting)
         {
             _cardinalDbContext.Meetings.Add(meeting);
@@ -89,6 +94,12 @@ namespace cardinal_webservices.Data
                 _cardinalDbContext.Invitations.Remove(invitation);
                 await _cardinalDbContext.SaveChangesAsync();
             }
+        }
+
+        public async Task UpsertUserEventAsync(UserEvent userEvent) 
+        {
+            _cardinalDbContext.UserEvents.Add(userEvent);
+            await _cardinalDbContext.SaveChangesAsync();
         }
 
         public IEnumerable<User> GetUsersForMeeting(string meetingId) 

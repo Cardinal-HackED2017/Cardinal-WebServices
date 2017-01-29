@@ -17,6 +17,9 @@ namespace cardinal_webservices.Data
 
         public DbSet<Invitation> Invitations { get; set; }
 
+        public DbSet<UserEvent> UserEvents { get; set; }
+
+
         public CardinalDbContext(DbContextOptions<CardinalDbContext> options) : base(options) {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

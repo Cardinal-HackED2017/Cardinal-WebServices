@@ -18,6 +18,8 @@ namespace cardinal_webservices.Data
 
         IEnumerable<Invitation> GetInvitations();
 
+        IEnumerable<UserEvent> GetUserEvents();
+        
         Task UpsertMeetingAsync(Meeting meeting);
 
         Task UpsertMeetingParticipationAsync(MeetingParticipation meetingParticipation);
@@ -41,5 +43,7 @@ namespace cardinal_webservices.Data
         IEnumerable<Invitation> GetInvitationsForUser(string userId);
 
         Meeting GetMeetingForInvitation(string invitationId);
+
+
     }
 }

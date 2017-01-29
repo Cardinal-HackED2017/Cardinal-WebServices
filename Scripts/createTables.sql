@@ -64,3 +64,15 @@ CREATE TABLE Invitations (
     ,PRIMARY KEY (invitation_id)
     ,FOREIGN KEY (meeting_id) REFERENCES Meetings
 );
+
+CREATE TABLE Events (
+    event_id text
+    ,meeting_id text
+    ,user_id text
+    ,name text
+    ,start timestamp
+    ,length interval
+    ,PRIMARY KEY (event_id)
+    ,FOREIGN KEY (meeting_id) REFERENCES Meetings
+    ,FOREIGN KEY (user_id) REFERENCES Users
+);
