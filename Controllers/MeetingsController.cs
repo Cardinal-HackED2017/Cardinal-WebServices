@@ -12,10 +12,12 @@ namespace cardinal_webservices.Controllers
     public class MeetingsController : Controller
     {
         private readonly ICardinalDataService _cardinalDataService;
+        private readonly MeetingTimesCalculator _meetingTimesCalculator;
 
-        public MeetingsController(ICardinalDataService cardinalDataService) 
+        public MeetingsController(ICardinalDataService cardinalDataService, MeetingTimesCalculator meetingsTimeCalculator) 
         {
             _cardinalDataService = cardinalDataService;
+            _meetingTimesCalculator = meetingsTimeCalculator;
         }
 
         private MeetingModel ConvertToMeetingModel(Meeting meeting) 
@@ -56,6 +58,7 @@ namespace cardinal_webservices.Controllers
             };
 
             await _cardinalDataService.UpsertMeetingParticipationAsync(meetingParticipation);
+            _meetingTimesCalculator.ProcessUserJoinMeeting(meetingId, userId, this.GetAuthToken());
         }
     }
 }
