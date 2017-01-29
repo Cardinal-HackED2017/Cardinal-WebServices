@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace cardinal_webservices
 {
@@ -41,8 +42,8 @@ namespace cardinal_webservices
             services.AddScoped<ICardinalDataService, CardinalDataService>();
 
             // Add framework services.
-            services.AddCors();
             services.AddMvc();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +52,11 @@ namespace cardinal_webservices
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseCors(builder =>
+                builder.AllowAnyHeader()
+                       .AllowAnyOrigin()
+                       .AllowAnyMethod()
+            );
             app.UseMvc();
         }
     }
