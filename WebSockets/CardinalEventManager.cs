@@ -11,13 +11,18 @@ namespace cardinal_webservices.WebSockets
 {
     public class CardinalEventManager 
     {
-        private readonly IEnumerable<CardinalWebSocket> _sockets;
+        private readonly List<CardinalWebSocket> _sockets;
         private readonly ICardinalDataService _cardinalDataService;
 
         public CardinalEventManager(ICardinalDataService cardinalDataService) 
         {
             _sockets = new List<CardinalWebSocket>();
             _cardinalDataService = cardinalDataService;   
+        }
+
+        public void AddCardinalWebSocket(CardinalWebSocket cardinalWebSocket) 
+        {
+            _sockets.Add(cardinalWebSocket);
         }
         
         private bool IsUserInMeeting(string userId, string meetingId) 
