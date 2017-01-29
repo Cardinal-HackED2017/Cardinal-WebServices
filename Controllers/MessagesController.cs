@@ -19,19 +19,19 @@ namespace cardinal_webservices.Controllers
             _cardinalDataService = cardinalDataService;
         }
 
-        [HttpGet("messages")]
-        public IEnumerable<Message> Get()
+        [HttpGet("meetings/{meetingid}/messages")]
+        public IEnumerable<Message> Get(string meetingid)
         {
             return _cardinalDataService.GetMessages();
         }
 
-        [HttpPost("messages")]
-        public async Task<IActionResult> CreateMessage([FromBody]Message message) 
+        [HttpPost("meetings/{meetingid}/messages")]
+        public async Task<IActionResult> CreateMessage([FromBody]Message message, string meetingid) 
         {
             message.MessageId = Guid.NewGuid().ToString();
             message.CreatedTime = DateTime.Now;
             message.UserId = NUUID;
-            message.MeetingId = NUUID;
+            message.MeetingId = meetingid;
             await _cardinalDataService.UpsertMessageAsync(message);
 
             return Created("message", message);

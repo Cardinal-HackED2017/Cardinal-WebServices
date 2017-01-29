@@ -9,6 +9,12 @@ namespace cardinal_webservices.Data
 
         public DbSet<Message> Messages { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
+        //public DbSet<MeetingParticipation> MeetingParticipations { get; set; }
+
+        //public DbSet<MeetingTime> MeetingTimes { get; set; }
+
         public CardinalDbContext(DbContextOptions<CardinalDbContext> options) : base(options) {}
     }
 }
