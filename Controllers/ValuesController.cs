@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace cardinal_webservices.Controllers
 {
-    [Route("api/[controller]")]
     public class ValuesController : Controller
     {
         private readonly ICardinalDataService _cardinalDataService;
@@ -19,10 +18,21 @@ namespace cardinal_webservices.Controllers
         }
 
         // GET api/values
-        [HttpGet]
+        [HttpGet("meetings")]
         public IEnumerable<Meeting> Get()
         {
             return _cardinalDataService.GetMeetings();
+        }
+
+        [HttpPost("meetings")]
+        public async Task<IActionResult> CreateMeeting(Meeting meeting) 
+        {
+            meeting.Id = Guid.NewGuid().ToString();
+            meeting.CreatedTime = DateTime.Now;
+
+            await _cardinalDataService.UpsertMeetingAsync(meeting);
+
+            return Created("meeting", meeting);
         }
 
         // GET api/values/5
