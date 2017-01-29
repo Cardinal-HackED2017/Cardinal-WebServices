@@ -20,9 +20,9 @@ namespace cardinal_webservices.DataModels
         [Column("end_fence")]
         public DateTime EndFence { get; set; }
         [Column("day_start")]
-        public Timespan dayStart {get; set;}
+        public TimeSpan dayStart {get; set;}
         [Column("day_end")]
-        public Timespan dayEnd {get; set;}
+        public TimeSpan dayEnd {get; set;}
         [Column("length")]
         public TimeSpan Length { get; set; }
         [Column("longitude")]
