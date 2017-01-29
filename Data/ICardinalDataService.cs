@@ -19,6 +19,8 @@ namespace cardinal_webservices.Data
         IEnumerable<Invitation> GetInvitations();
 
         IEnumerable<UserEvent> GetUserEvents();
+
+        IEnumerable<Gap> GetGaps();
         
         Task UpsertMeetingAsync(Meeting meeting);
 
@@ -31,6 +33,8 @@ namespace cardinal_webservices.Data
         Task UpsertMeetingTimeAsync(MeetingTime meetingTime);
 
         Task UpsertInvitationAsync(Invitation invitation);
+
+        Task UpsertGapAsync(Gap gap);
         
         Task DeleteInvitationAsync(string invitationId);
 
@@ -39,6 +43,8 @@ namespace cardinal_webservices.Data
         IEnumerable<Meeting> GetMeetingsForUser(string userId);
 
         IEnumerable<MeetingTime> GetMeetingTimesForMeeting(string meetingId);
+
+        IEnumerable<Gap> GetGapsForMeeting(string meetingId);
 
         IEnumerable<Invitation> GetInvitationsForUser(string userId);
 

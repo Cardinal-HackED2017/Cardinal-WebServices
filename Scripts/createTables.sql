@@ -76,3 +76,12 @@ CREATE TABLE Events (
     ,FOREIGN KEY (meeting_id) REFERENCES Meetings
     ,FOREIGN KEY (user_id) REFERENCES Users
 );
+
+CREATE TABLE Gaps (
+    gap_id text
+    ,meeting_id text
+    ,start timestamp
+    ,length interval
+    ,PRIMARY KEY (event_id)
+    ,FOREIGN KEY (meeting_id) REFERENCES Meetings
+);

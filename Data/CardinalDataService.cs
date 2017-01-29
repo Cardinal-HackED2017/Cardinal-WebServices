@@ -50,6 +50,11 @@ namespace cardinal_webservices.Data
             return _cardinalDbContext.UserEvents;
         }
 
+        public IEnumerable<Gap> GetGaps() 
+        {
+            return _cardinalDbContext.Gaps;
+        }
+
         public async Task UpsertMeetingAsync(Meeting meeting)
         {
             _cardinalDbContext.Meetings.Add(meeting);
@@ -82,6 +87,12 @@ namespace cardinal_webservices.Data
         public async Task UpsertInvitationAsync(Invitation invitation) 
         {
             _cardinalDbContext.Invitations.Add(invitation);
+            await _cardinalDbContext.SaveChangesAsync();
+        }
+
+        public async Task UpsertGapAsync(Gap gap) 
+        {
+            _cardinalDbContext.Gaps.Add(gap);
             await _cardinalDbContext.SaveChangesAsync();
         }
 
@@ -123,6 +134,11 @@ namespace cardinal_webservices.Data
         public IEnumerable<MeetingTime> GetMeetingTimesForMeeting(string meetingId) 
         {
             return GetMeetingTimes().Where(t => t.MeetingId == meetingId).ToList();
+        }
+
+        public IEnumerable<Gap> GetGapsForMeeting(string meetingId) 
+        {
+            return GetGaps().Where(t => t.MeetingId == meetingId).ToList();
         }
 
         public IEnumerable<Invitation> GetInvitationsForUser(string userId) 

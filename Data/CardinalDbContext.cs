@@ -19,6 +19,8 @@ namespace cardinal_webservices.Data
 
         public DbSet<UserEvent> UserEvents { get; set; }
 
+        public DbSet<Gap> Gaps { get; set; }
+
 
         public CardinalDbContext(DbContextOptions<CardinalDbContext> options) : base(options) {}
 
