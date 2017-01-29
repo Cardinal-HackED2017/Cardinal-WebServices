@@ -29,5 +29,7 @@ namespace cardinal_webservices.Data
         IEnumerable<User> GetUsersForMeeting(string meetingId);
 
         IEnumerable<Meeting> GetMeetingsForUser(string userId);
+
+        IEnumerable<MeetingTime> GetMeetingTimesForMeeting(string meetingId);
     }
 }

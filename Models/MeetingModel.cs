@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using cardinal_webservices.DataModels;
 
@@ -6,8 +7,7 @@ namespace cardinal_webservices.Models
 {
     public class MeetingModel
     {
-        public List<UserModel> users {get; set;}
-        public List<MeetingTimeModel> suggestedTimes {get; set;}
+        public IEnumerable<MeetingTimeModel> suggestedTimes {get; set;}
         public string name {get; set;}
         public string Id {get; set;}
         public DateTime createdTime {get; set;}
@@ -15,6 +15,7 @@ namespace cardinal_webservices.Models
         public DateTime endFence {get; set;}
         public TimeSpan length {get; set;}
         public Location location {get; set;}
+        public IEnumerable<string> Participants { get; set; }
 
         public MeetingModel(Meeting meeting, IEnumerable<User> usersRemote, IEnumerable<MeetingTime> meetingTimes)
         {
@@ -31,16 +32,8 @@ namespace cardinal_webservices.Models
                 Description = meeting.LocationDescription
             };
 
-            foreach (User user in usersRemote)
-            {
-                users.Add(new UserModel(user));
-            }
-
-            foreach (MeetingTime meetingTime in meetingTimes)
-            {
-                suggestedTimes.Add(new MeetingTimeModel(meetingTime, meeting));
-            }
-
+            Participants = usersRemote.Select(u => u.DisplayName);
+            suggestedTimes = meetingTimes.Select(m => new MeetingTimeModel(m, meeting));
         }
 
     }

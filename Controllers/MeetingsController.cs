@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using cardinal_webservices.Data;
 using cardinal_webservices.DataModels;
+using cardinal_webservices.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cardinal_webservices.Controllers
@@ -17,16 +18,19 @@ namespace cardinal_webservices.Controllers
             _cardinalDataService = cardinalDataService;
         }
 
-        [HttpGet("meetings")]
-        public IEnumerable<Meeting> GetMeetings()
+        private MeetingModel ConvertToMeetingModel(Meeting meeting) 
         {
-            var myMeetingIds = _cardinalDataService.GetMeetingParticipations()
-                                                   .Where(p => p.UserId == this.GetCallingUserId())
-                                                   .Select(p => p.MeetingId)
-                                                   .ToList();
+            var usersForMeeting = _cardinalDataService.GetUsersForMeeting(meeting.Id);
+            var timesForMeeting = _cardinalDataService.GetMeetingTimesForMeeting(meeting.Id);
 
-            return _cardinalDataService.GetMeetings()
-                                       .Where(m => myMeetingIds.Contains(m.Id))
+            return new MeetingModel(meeting, usersForMeeting, timesForMeeting);
+        }
+
+        [HttpGet("meetings")]
+        public IEnumerable<MeetingModel> GetMeetings()
+        {
+            return _cardinalDataService.GetMeetingsForUser(this.GetCallingUserId())
+                                       .Select(ConvertToMeetingModel)
                                        .ToList();
         }
 
