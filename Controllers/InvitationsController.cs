@@ -67,14 +67,9 @@ namespace cardinal_webservices.Controllers
             await _cardinalDataService.UpsertMeetingParticipationAsync(meetingParticipation);
             await _cardinalDataService.DeleteInvitationAsync(invitationId);
 
-            _meetingTimesCalculator.ProcessUserJoinMeeting(invitation.MeetingId, invitation.UserId,  GetAuthToken());
+            _meetingTimesCalculator.ProcessUserJoinMeeting(invitation.MeetingId, invitation.UserId, this.GetAuthToken());
 
             return NoContent();
-        }
-
-        private string GetAuthToken() 
-        {
-            return HttpContext.Request.Headers["Authorization"];
         }
     }
 

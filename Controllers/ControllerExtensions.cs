@@ -16,5 +16,10 @@ namespace cardinal_webservices.Controllers
                 return "6f2241ae-da64-4aa8-a414-308d8f900057";
             }
         }
+
+        public static string GetAuthToken(this Controller controller) 
+        {
+            return controller.HttpContext.Request.Headers["Authorization"];
+        }
     }
 }
