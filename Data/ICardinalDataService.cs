@@ -8,6 +8,10 @@ namespace cardinal_webservices.Data
     {
         IEnumerable<Meeting> GetMeetings();
 
+        IEnumerable<Message> GetMessages();
+
         Task UpsertMeetingAsync(Meeting meeting);
+
+        Task UpsertMessageAsync(Message message);
     }
 }

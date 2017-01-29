@@ -19,9 +19,20 @@ namespace cardinal_webservices.Data
             return _cardinalDbContext.Meetings;
         }
 
+        public IEnumerable<Message> GetMessages()
+        {
+            return _cardinalDbContext.Messages;
+        }
+
         public async Task UpsertMeetingAsync(Meeting meeting)
         {
             _cardinalDbContext.Meetings.Add(meeting);
+            await _cardinalDbContext.SaveChangesAsync();
+        }
+
+        public async Task UpsertMessageAsync(Message message)
+        {
+            _cardinalDbContext.Messages.Add(message);
             await _cardinalDbContext.SaveChangesAsync();
         }
     }
