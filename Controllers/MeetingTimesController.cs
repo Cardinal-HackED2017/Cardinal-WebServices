@@ -22,7 +22,7 @@ namespace cardinal_webservices.Controllers
         public IEnumerable<MeetingTime> GetMeetingTimes(string meetingid)
         {
             return _cardinalDataService.GetMeetingTimes()
-                                        .Where(x => x.MeetingId.Equals(meetingid));
+                                       .Where(x => x.MeetingId.Equals(meetingid));
         }
 
         [HttpPost("meetings/{meetingid}/suggested-times")]
