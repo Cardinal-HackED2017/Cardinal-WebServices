@@ -9,7 +9,7 @@ namespace cardinal_webservices.Controllers
         {
             try 
             {
-                return controller.HttpContext.Request.Headers["e-mail"];
+                return controller.HttpContext.Request.Headers["E-mail"];
             }
             catch
             {
