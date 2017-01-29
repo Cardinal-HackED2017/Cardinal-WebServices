@@ -25,7 +25,8 @@ namespace cardinal_webservices.Controllers
                                                .Select(p => p.UserId);
 
             return _cardinalDataService.GetUsers()
-                                       .Where(u => userIds.Contains(u.Id));
+                                       .Where(u => userIds.Contains(u.Id))
+                                       .ToList();
         }
 
         [HttpPost("meetings/{meetingid}/join")]
