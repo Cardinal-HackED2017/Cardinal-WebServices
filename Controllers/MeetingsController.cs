@@ -18,9 +18,14 @@ namespace cardinal_webservices.Controllers
         }
 
         [HttpGet("meetings")]
-        public IEnumerable<Meeting> Get()
+        public IEnumerable<Meeting> GetMeetings()
         {
-            return _cardinalDataService.GetMeetings();
+            var myMeetingIds = _cardinalDataService.GetMeetingParticipations()
+                                                   .Where(p => p.UserId == this.GetCallingUser().Id)
+                                                   .Select(p => p.MeetingId);
+
+            return _cardinalDataService.GetMeetings()
+                                       .Where(m => myMeetingIds.Contains(m.Id));
         }
 
         [HttpPost("meetings")]
