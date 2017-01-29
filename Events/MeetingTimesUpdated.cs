@@ -1,4 +1,6 @@
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using cardinal_webservices.Models;
 
 namespace cardinal_webservices 
 {
@@ -9,9 +11,12 @@ namespace cardinal_webservices
         [JsonProperty("payload")]
         public object Payload { get; set; }
 
-        public static MeetingTimesUpdated FromMeetingTimes()
+        public static MeetingTimesUpdated FromMeetingTimes(IEnumerable<MeetingTimeModel> meetingTimes)
         {
-            return new MeetingTimesUpdated(); 
+            return new MeetingTimesUpdated() 
+            {
+                Payload = meetingTimes
+            };
         }
     }
 }
