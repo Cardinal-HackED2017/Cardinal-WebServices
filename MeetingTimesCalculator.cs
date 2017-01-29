@@ -29,7 +29,7 @@ namespace cardinal_webservices
 
             foreach (UserEvent userEvent in events)
             {
-                await _cardinalDataService.UpsertUserEvent(userEvent);
+                await _cardinalDataService.UpsertUserEventAsync(userEvent);
             }
             var calendar = new CalendarModel
             {

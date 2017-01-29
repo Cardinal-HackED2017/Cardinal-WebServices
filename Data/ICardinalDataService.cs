@@ -36,7 +36,7 @@ namespace cardinal_webservices.Data
 
         Task UpsertGapAsync(Gap gap);
 
-        Task UpsertUserEvent(UserEvent userEvent);
+        Task UpsertUserEventAsync(UserEvent userEvent);
         
         Task DeleteInvitationAsync(string invitationId);
 
