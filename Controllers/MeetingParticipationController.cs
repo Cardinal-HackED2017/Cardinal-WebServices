@@ -30,10 +30,13 @@ namespace cardinal_webservices.Controllers
         }
 
         [HttpPost("meetings/{meetingid}/join")]
-        public async Task<IActionResult> JoinMeeting([FromBody] MeetingParticipation meetingParticipation, string meetingid) 
+        public async Task<IActionResult> JoinMeeting(string meetingid) 
         {
-            meetingParticipation.MeetingId = meetingid;
-            meetingParticipation.UserId = this.GetCallingUserId();
+            var meetingParticipation = new MeetingParticipation 
+            {
+                MeetingId = meetingid,
+                UserId = this.GetCallingUserId()
+            };
 
             await _cardinalDataService.UpsertMeetingParticipationAsync(meetingParticipation);
 
