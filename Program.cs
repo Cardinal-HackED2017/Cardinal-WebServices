@@ -14,8 +14,8 @@ namespace cardinal_webservices
     {
         public static void Main(string[] args)
         {
-            var testCal = new CalendarModel();
-            testCal.testConsolidation();
+            //var testCal = new CalendarModel();
+            //testCal.testConsolidation();
             var config = new ConfigurationBuilder()
                 .AddCommandLine(args)
                 .AddEnvironmentVariables(prefix: "ASPNETCORE_")

@@ -12,12 +12,16 @@ namespace cardinal_webservices.Models
 
         public DateTime startDate {get; set;}
         public DateTime endDate {get; set;}
+        public TimeSpan dayStart {get; set;}
+        public TimeSpan dayEnd {get; set;}
+        public TimeSpan lengthOfMeeting {get; set;}
 
-        public CalendarModel(DateTime start, DateTime end, List<UserEventModel> events)
+        public CalendarModel(DateTime start, DateTime end, TimeSpan dayStart, TimeSpan dayEnd, TimeSpan length, List<UserEventModel> events)
         {
             this.startDate = start;
             this.endDate = end;
             this.events = events;
+            this.lengthOfMeeting = length;
             gaps = new List<TimeSlotModel>();
             consolidatedEvents = new List<TimeSlotModel>();
         }
@@ -43,6 +47,18 @@ namespace cardinal_webservices.Models
         {
             var tempEvents = (events.OrderByDescending(x => x.timeSlot.start)
                                                                     .Select(x => x.timeSlot).ToList());
+            
+            foreach(TimeSlotModel t in tempEvents)
+            {
+                if (t.start.TimeOfDay < dayStart)
+                {
+                    t.start = t.start.Date.Add(dayStart);
+                }
+                if (t.end().TimeOfDay > dayEnd)
+                {
+                    t.length = t.length - (t.end().TimeOfDay - dayEnd);
+                }
+            }
             tempEvents.Reverse();
             bool delta = true;
             
@@ -101,14 +117,33 @@ namespace cardinal_webservices.Models
                     {
                         tempEvents.Add(thisEvent);
                     }
-                    
                 }
-                
             }
+            createGaps();
         }
 
+        private void createGaps()
+        {
+            for(int i = 0; i < consolidatedEvents.Count; i++)
+            {
+                TimeSpan length = i+1 < consolidatedEvents.Count ? consolidatedEvents[i+1].start.TimeOfDay - consolidatedEvents[i].end().TimeOfDay : dayEnd - consolidatedEvents[i].end().TimeOfDay;
+
+                if (length > lengthOfMeeting)
+                {
+                    gaps.Add(new TimeSlotModel
+                    {
+                        start = consolidatedEvents[i].end(),
+                        length = i+1 < consolidatedEvents.Count ? consolidatedEvents[i+1].start.TimeOfDay - consolidatedEvents[i].end().TimeOfDay : dayEnd - consolidatedEvents[i].end().TimeOfDay
+                    });
+                }
+            }
+        }
+        /*
         public void testConsolidation()
         {
+            this.dayStart = new TimeSpan(8, 0, 0);// 8:00 a,
+            this.dayEnd = new TimeSpan(18,0,0);
+            this.lengthOfMeeting = new TimeSpan(2,0,0);
             TimeSlotModel timeSlottest = new TimeSlotModel{
                 start = DateTime.Now,
                 length = new TimeSpan(2,0,0) // 2 hours
@@ -163,6 +198,12 @@ namespace cardinal_webservices.Models
                 Console.WriteLine("-----------------------------------");
                 Console.WriteLine(timeslot.ToString());
             }
-        }
+            foreach(TimeSlotModel gap in gaps)
+            {
+                Console.WriteLine("-----------------------GAP------------");
+                Console.WriteLine(gap.ToString());
+            }
+            
+        }*/
     }
 }
