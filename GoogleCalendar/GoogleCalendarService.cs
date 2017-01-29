@@ -22,9 +22,8 @@ namespace cardinal_webservices.GoogleCalendar
             var httpClient = GetHttpClient();
             var calendarsListResponse = httpClient.GetAsync("/users/me/calendarList");
             var resultJson = await calendarsListResponse.Result.Content.ReadAsStringAsync();
-            Console.WriteLine(resultJson);
 
-            return JsonConvert.DeserializeObject<IEnumerable<Calendar>>(resultJson);
+            return JsonConvert.DeserializeObject<CalendarsResponseWrapper>(resultJson).Items;
         }
 
         public async Task<IEnumerable<Event>> GetEventsAsync(string calendarId) 
@@ -32,9 +31,8 @@ namespace cardinal_webservices.GoogleCalendar
             var httpClient = GetHttpClient();
             var calendarsListResponse = httpClient.GetAsync($"/calendars/{calendarId}/events");
             var resultJson = await calendarsListResponse.Result.Content.ReadAsStringAsync();
-            Console.WriteLine(resultJson);
 
-            return JsonConvert.DeserializeObject<IEnumerable<Event>>(resultJson);;
+            return JsonConvert.DeserializeObject<EventsResponseWrapper>(resultJson).Items;
         }
 
         public HttpClient GetHttpClient() 
