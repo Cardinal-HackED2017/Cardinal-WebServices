@@ -42,8 +42,20 @@ namespace cardinal_webservices.Controllers
             meeting.CreatedTime = DateTime.Now;
 
             await _cardinalDataService.UpsertMeetingAsync(meeting);
+            await JoinMeeting(meeting.Id, meeting.CreatorId);
 
             return Created("meeting", meeting);
+        }
+
+        private async Task JoinMeeting(string meetingId, string userId) 
+        {
+            var meetingParticipation = new MeetingParticipation 
+            {
+                MeetingId = meetingId,
+                UserId = userId
+            };
+
+            await _cardinalDataService.UpsertMeetingParticipationAsync(meetingParticipation);
         }
     }
 }
