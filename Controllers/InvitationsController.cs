@@ -13,10 +13,12 @@ namespace cardinal_webservices.Controllers
     public class InvitationsController : Controller
     {
         private readonly ICardinalDataService _cardinalDataService;
+        private readonly MeetingTimesCalculator _meetingTimesCalculator;
 
-        public InvitationsController(ICardinalDataService cardinalDataService) 
+        public InvitationsController(ICardinalDataService cardinalDataService, MeetingTimesCalculator meetingsTimeCalculator) 
         {
             _cardinalDataService = cardinalDataService;
+            _meetingTimesCalculator = meetingsTimeCalculator;
         }
 
         [HttpGet("invitations")]
@@ -61,11 +63,18 @@ namespace cardinal_webservices.Controllers
                 MeetingId = invitation.MeetingId,
                 UserId = invitation.UserId
             };
-
+            
             await _cardinalDataService.UpsertMeetingParticipationAsync(meetingParticipation);
             await _cardinalDataService.DeleteInvitationAsync(invitationId);
 
+            _meetingTimesCalculator.ProcessUserJoinMeeting(invitation.MeetingId, invitation.UserId,  GetAuthToken());
+
             return NoContent();
+        }
+
+        private string GetAuthToken() 
+        {
+            return HttpContext.Request.Headers["Authorization"];
         }
     }
 

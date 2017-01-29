@@ -37,6 +37,8 @@ namespace cardinal_webservices
 
             services.AddScoped<ICardinalDataService, CardinalDataService>();
             services.AddSingleton<CardinalEventManager>();
+            services.AddSingleton<MeetingTimesUpdated>();
+
             // Add framework services.
             services.AddMvc();
             services.AddCors();
