@@ -22,7 +22,7 @@ namespace cardinal_webservices.Controllers
         [HttpGet("meetings/{meetingid}/messages")]
         public IEnumerable<Message> Get(string meetingid)
         {
-            return _cardinalDataService.GetMessages();
+            return _cardinalDataService.GetMessages().Where(x => x.MeetingId.Equals(meetingid));
         }
 
         [HttpPost("meetings/{meetingid}/messages")]

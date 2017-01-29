@@ -24,16 +24,15 @@ namespace cardinal_webservices.Data
             return _cardinalDbContext.Messages;
         }
 
-       /* public IEnumerable<MeetingParticipation> GetMeetingParticipations()
+        public IEnumerable<MeetingParticipation> GetMeetingParticipations()
         {
-            throw new NotImplementedException();
-            //return _cardinalDbContext.MeetingParticipations;
+            return _cardinalDbContext.MeetingParticipations;
         }
 
         public IEnumerable<MeetingTime> GetMeetingTimes()
         {
              return _cardinalDbContext.MeetingTimes;
-        }*/
+        }
 
         public IEnumerable<User> GetUsers()
         {
@@ -54,6 +53,18 @@ namespace cardinal_webservices.Data
         public async Task UpsertUserAsync(User user)
         {
             _cardinalDbContext.Users.Add(user);
+            await _cardinalDbContext.SaveChangesAsync();
+        }
+
+        public async Task UpsertMeetingParticipationAsync(MeetingParticipation meetingParticipation)
+        {
+            _cardinalDbContext.MeetingParticipations.Add(meetingParticipation);
+            await _cardinalDbContext.SaveChangesAsync();
+        }
+
+        public async Task UpsertMeetingTimeAsync(MeetingTime meetingTime)
+        {
+            _cardinalDbContext.MeetingTimes.Add(meetingTime);
             await _cardinalDbContext.SaveChangesAsync();
         }
     }
