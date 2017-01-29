@@ -60,7 +60,7 @@ namespace cardinal_webservices.WebSockets
         public async void OnMeetingTimesUpdated(string meetingId) 
         {
             var sendTasks = _sockets.Where(s => IsUserInMeeting(s.UserId, meetingId))
-                                    .Select(s => s.SendObjectAsync(GetMeetingTimesUpdatedEvent(meetingId));
+                                    .Select(s => s.SendObjectAsync(GetMeetingTimesUpdatedEvent(meetingId)));
 
             await Task.WhenAll(sendTasks);
         }

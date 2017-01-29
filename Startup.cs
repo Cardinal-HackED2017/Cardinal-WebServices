@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using cardinal_webservices.WebSockets;
 
 namespace cardinal_webservices
 {
@@ -40,6 +41,7 @@ namespace cardinal_webservices
             );
 
             services.AddScoped<ICardinalDataService, CardinalDataService>();
+            services.AddSingleton<CardinalEventManager>();
 
             // Add framework services.
             services.AddMvc();
