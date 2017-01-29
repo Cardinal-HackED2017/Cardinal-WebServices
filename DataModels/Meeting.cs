@@ -11,12 +11,18 @@ namespace cardinal_webservices.DataModels
         public string Id { get; set; }
         [Column("name")]
         public string Name { get; set; }
+        [ColumnAttribute("description")]
+        public string Description { get; set; }
         [Column("create_time")]
         public DateTime CreatedTime { get; set; }
         [Column("start_fence")]
         public DateTime StartFence { get; set; }
         [Column("end_fence")]
         public DateTime EndFence { get; set; }
+        [Column("day_start")]
+        public Timespan dayStart {get; set;}
+        [Column("day_end")]
+        public Timespan dayEnd {get; set;}
         [Column("length")]
         public TimeSpan Length { get; set; }
         [Column("longitude")]

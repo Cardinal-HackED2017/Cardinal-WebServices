@@ -9,20 +9,26 @@ namespace cardinal_webservices.Models
         public List<UserModel> users {get; set;}
         public List<MeetingTimeModel> suggestedTimes {get; set;}
         public string name {get; set;}
+        public string description {get; set;}
         public string Id {get; set;}
         public DateTime createdTime {get; set;}
         public DateTime startFence { get; set; }
         public DateTime endFence {get; set;}
+        public TimeSpan dayStart {get; set;}
+        public TimeSpan dayEnd {get; set;}
         public TimeSpan length {get; set;}
         public Location location {get; set;}
 
         public MeetingModel(Meeting meeting, IEnumerable<User> usersRemote, IEnumerable<MeetingTime> meetingTimes)
         {
             name = meeting.Name;
+            description = meeting.Description;
             Id = meeting.Id;
             createdTime = meeting.CreatedTime;
             startFence = meeting.StartFence;
             endFence = meeting.EndFence;
+            dayStart = meeting.dayStart;
+            dayEnd = meeting.dayEnd;
             length = meeting.Length;
 
             location = new Location {
