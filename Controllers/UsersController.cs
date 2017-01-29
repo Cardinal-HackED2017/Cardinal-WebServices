@@ -22,7 +22,7 @@ namespace cardinal_webservices.Controllers
         [HttpPost("users")]
         public async Task<IActionResult> CreateUser([FromBody]User user) 
         {
-            user.Id = Guid.NewGuid().ToString();
+            user.Id = this.GetCallingUserId();
             await _cardinalDataService.UpsertUserAsync(user);
             return Created("user", user);
         }
