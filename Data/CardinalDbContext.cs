@@ -16,5 +16,14 @@ namespace cardinal_webservices.Data
         public DbSet<MeetingTime> MeetingTimes { get; set; }
 
         public CardinalDbContext(DbContextOptions<CardinalDbContext> options) : base(options) {}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<MeetingParticipation>().HasKey(u => new 
+        { 
+            u.UserId, 
+            u.MeetingId
+        });
+    }
     }
 }

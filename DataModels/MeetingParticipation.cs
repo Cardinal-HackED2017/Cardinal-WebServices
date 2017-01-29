@@ -7,7 +7,7 @@ namespace cardinal_webservices.DataModels
     [Table("attendees")]
     public class MeetingParticipation
     {
-        [Key, Column("meeting_id")]
+        [ForeignKey("meetings"), Column("meeting_id")]
         public string MeetingId { get; set; }
         [ForeignKey("users"), Column("user_id")]
         public string UserId { get; set; }
