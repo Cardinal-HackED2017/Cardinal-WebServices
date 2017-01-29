@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using cardinal_webservices.DataModels;
@@ -66,6 +67,29 @@ namespace cardinal_webservices.Data
         {
             _cardinalDbContext.MeetingTimes.Add(meetingTime);
             await _cardinalDbContext.SaveChangesAsync();
+        }
+
+        public IEnumerable<User> GetUsersForMeeting(string meetingId) 
+        {
+            var userIdsInMeeting = GetMeetingParticipations().Where(p => p.MeetingId == meetingId)
+                                                             .Select(p => p.UserId)
+                                                             .ToList();
+            
+            return GetUsers().Where(u => userIdsInMeeting.Contains(u.Id)).ToList();
+        }
+
+        public IEnumerable<Meeting> GetMeetingsForUser(string userId) 
+        {
+            var meetingIdsForuser = GetMeetingParticipations().Where(p => p.UserId == userId)
+                                                              .Select(p => p.MeetingId)
+                                                              .ToList();
+
+            return GetMeetings().Where(m =>meetingIdsForuser.Contains(m.Id)).ToList();
+        }
+
+        public IEnumerable<MeetingTime> GetMeetingTimesForMeeting(string meetingId) 
+        {
+            return GetMeetingTimes().Where(t => t.MeetingId == meetingId).ToList();
         }
     }
 }

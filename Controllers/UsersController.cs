@@ -17,9 +17,22 @@ namespace cardinal_webservices.Controllers
             _cardinalDataService = cardinalDataService;
         }
 
+        public bool DoesUserExist(string userId) 
+        {
+            return _cardinalDataService.GetUsers()
+                                       .Any(u => u.Id == userId);
+        }
+
         [HttpPost("users")]
         public async Task<IActionResult> CreateUser([FromBody]User user) 
         {
+            var userId = this.GetCallingUserId();
+
+            if (DoesUserExist(userId)) 
+            {
+                return NoContent();
+            }
+
             user.Id = this.GetCallingUserId();
             await _cardinalDataService.UpsertUserAsync(user);
             return Created("user", user);
