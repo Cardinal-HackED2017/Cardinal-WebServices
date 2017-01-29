@@ -35,12 +35,12 @@ namespace cardinal_webservices.Controllers
         {
             message.MessageId = Guid.NewGuid().ToString();
             message.CreatedTime = DateTime.Now;
-            message.UserId = NUUID;
+            message.UserId = this.GetCallingUserId();
             message.MeetingId = meetingid;
             await _cardinalDataService.UpsertMessageAsync(message);
 
             _eventManager.OnMessageCreated(message);
-            
+
             return Created("message", message);
         }
     }

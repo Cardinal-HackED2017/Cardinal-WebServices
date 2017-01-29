@@ -18,11 +18,11 @@ namespace cardinal_webservices.Controllers
             _eventManager = eventManager;
         }
 
-        [HttpGet("events")]
-        public async Task Get() 
+        [HttpGet("events/{userId}")]
+        public async Task Get(string userId) 
         {
             var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
-            var cardinalSocket = new CardinalWebSocket(this.GetCallingUserId(), webSocket);
+            var cardinalSocket = new CardinalWebSocket(userId, webSocket);
             _eventManager.AddCardinalWebSocket(cardinalSocket);
 
             await cardinalSocket.ReceiveWhileConnectionIsOpenAsync();

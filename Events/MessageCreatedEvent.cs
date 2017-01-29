@@ -1,4 +1,5 @@
 using cardinal_webservices.DataModels;
+using cardinal_webservices.Models;
 using Newtonsoft.Json;
 
 namespace cardinal_webservices.Events 
@@ -10,7 +11,7 @@ namespace cardinal_webservices.Events
         [JsonProperty("payload")]
         public object Payload { get; set; }
 
-        public static MessageCreatedEvent FromMessage(Message message)
+        public static MessageCreatedEvent FromMessage(MessageModel message)
         {
             return new MessageCreatedEvent 
             {
