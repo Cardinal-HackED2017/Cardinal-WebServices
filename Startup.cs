@@ -20,6 +20,7 @@ namespace cardinal_webservices
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile("secrets.json")
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -29,7 +30,7 @@ namespace cardinal_webservices
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connString = Configuration["SQL_DATABASE_CONNECTION_STRING"];
+            var connString = Configuration["connSecret"];
             services.AddDbContext<CardinalDbContext>(options =>
                 options.UseNpgsql(
                     connString,
