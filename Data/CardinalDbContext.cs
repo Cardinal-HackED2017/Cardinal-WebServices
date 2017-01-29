@@ -18,12 +18,19 @@ namespace cardinal_webservices.Data
         public CardinalDbContext(DbContextOptions<CardinalDbContext> options) : base(options) {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<MeetingParticipation>().HasKey(u => new 
-        { 
-            u.UserId, 
-            u.MeetingId
-        });
-    }
+        {
+            modelBuilder.Entity<MeetingParticipation>().HasKey(u => new 
+            { 
+                u.UserId, 
+                u.MeetingId
+            });
+
+            modelBuilder.Entity<Message>().HasKey(m => new 
+            { 
+                m.MessageId,
+                m.MeetingId,
+                m.UserId
+            });
+        }
     }
 }

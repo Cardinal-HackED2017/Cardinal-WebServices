@@ -7,11 +7,11 @@ namespace cardinal_webservices.DataModels
     [Table("messages")]
     public class Message 
     {
-        [Key, Column("message_id")]
+        [Column("message_id")]
         public string MessageId { get; set; }
-        [Key, Column("meeting_id")]
+        [Column("meeting_id")]
         public string MeetingId { get; set; }
-        [Key, Column("user_id")]
+        [Column("user_id")]
         public string UserId { get; set; }
         [Column("content")]
         public string content {get; set; }
