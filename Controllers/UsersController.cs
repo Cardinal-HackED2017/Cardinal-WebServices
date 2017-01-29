@@ -24,5 +24,12 @@ namespace cardinal_webservices.Controllers
             await _cardinalDataService.UpsertUserAsync(user);
             return Created("user", user);
         }
+
+        [HttpOptions("users")]
+        public IActionResult Options() 
+        {
+            HttpContext.Response.Headers.Add("Allow", "OPTIONS, GET, POST");
+            return Ok();
+        }
     }
 }
