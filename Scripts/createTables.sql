@@ -82,6 +82,6 @@ CREATE TABLE Gaps (
     ,meeting_id text
     ,start timestamp
     ,length interval
-    ,PRIMARY KEY (event_id)
+    ,PRIMARY KEY (gap_id)
     ,FOREIGN KEY (meeting_id) REFERENCES Meetings
 );
