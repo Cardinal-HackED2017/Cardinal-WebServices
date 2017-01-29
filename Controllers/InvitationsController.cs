@@ -20,10 +20,10 @@ namespace cardinal_webservices.Controllers
         }
 
         [HttpGet("invitations")]
-        public IEnumerable<InvitationModel> GetMeetings()
+        public IEnumerable<InvitationModel> GetInvitations()
         {
             return _cardinalDataService.GetInvitationsForUser(this.GetCallingUserId())
-                                       .Select(i => new InvitationModel(i))
+                                       .Select(i => new InvitationModel(i, _cardinalDataService.GetMeetingForInvitation(i.InvitationId)))
                                        .ToList();
         }
 

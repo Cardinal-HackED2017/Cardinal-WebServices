@@ -118,5 +118,14 @@ namespace cardinal_webservices.Data
         {
             return GetInvitations().Where(i => i.UserId == userId).ToList();
         }
+
+        public Meeting GetMeetingForInvitation(string invitationId) 
+        {
+            var meetingId = GetInvitations().Where(i => i.InvitationId == invitationId)
+                                            .Select(i => i.MeetingId)
+                                            .First();
+            
+            return GetMeetings().Where(m => m.Id == meetingId).First();
+        }
     }
 }
