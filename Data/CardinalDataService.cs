@@ -81,10 +81,15 @@ namespace cardinal_webservices.Data
         public IEnumerable<Meeting> GetMeetingsForUser(string userId) 
         {
             var meetingIdsForuser = GetMeetingParticipations().Where(p => p.UserId == userId)
-                                                             .Select(p => p.MeetingId)
-                                                             .ToList();
+                                                              .Select(p => p.MeetingId)
+                                                              .ToList();
 
             return GetMeetings().Where(m =>meetingIdsForuser.Contains(m.Id)).ToList();
+        }
+
+        public IEnumerable<MeetingTime> GetMeetingTimesForMeeting(string meetingId) 
+        {
+            return GetMeetingTimes().Where(t => t.MeetingId == meetingId).ToList();
         }
     }
 }
