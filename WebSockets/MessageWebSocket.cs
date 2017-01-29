@@ -3,6 +3,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace cardinal_webservices.WebSockets 
 {
@@ -12,6 +13,12 @@ namespace cardinal_webservices.WebSockets
         public MessageWebSocket(WebSocket webSocket) 
         {
             _websocket = webSocket;
+        }
+
+        public async Task SendObjectAsync(object obj) 
+        {
+            var serializedObject = JsonConvert.SerializeObject(obj);
+            await SendAsync(serializedObject);
         }
 
         public async Task SendAsync(string message)
