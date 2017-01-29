@@ -6,6 +6,7 @@ using cardinal_webservices.Data;
 using cardinal_webservices.DataModels;
 using cardinal_webservices.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace cardinal_webservices.Controllers
 {
@@ -25,5 +26,54 @@ namespace cardinal_webservices.Controllers
                                        .Select(i => new InvitationModel(i))
                                        .ToList();
         }
+
+        [HttpPost("invitations")]
+        public async Task<IActionResult> SendInvitations([FromBody] InvitationRequest invitationsRequest)  
+        {
+            var inviteTasks = invitationsRequest.Invitations
+                                                .Select(i => CreateInvitation(invitationsRequest.MeetingId, i))
+                                                .Select(i => _cardinalDataService.UpsertInvitationAsync(i));
+            
+            await Task.WhenAll(inviteTasks);
+
+            return Created("invitations", invitationsRequest);
+        }
+
+        private Invitation CreateInvitation(string meetingId, string userId) 
+        {
+            return new Invitation 
+            {
+                InvitationId = Guid.NewGuid().ToString(),
+                MeetingId = meetingId,
+                UserId = userId
+            };
+        }
+        
+        [HttpPost("invitations/{invitationId}")]
+        public async Task<IActionResult> AcceptInvitation(string invitationId) 
+        {
+            var invitation = _cardinalDataService.GetInvitationsForUser(this.GetCallingUserId())
+                                                 .Where(i => i.UserId == this.GetCallingUserId())
+                                                 .First();
+
+            var meetingParticipation = new MeetingParticipation 
+            {
+                MeetingId = invitation.MeetingId,
+                UserId = invitation.UserId
+            };
+
+            await _cardinalDataService.UpsertMeetingParticipationAsync(meetingParticipation);
+            await _cardinalDataService.DeleteInvitationAsync(invitationId);
+
+            return NoContent();
+        }
+    }
+
+    public class InvitationRequest 
+    {
+        [JsonProperty("meetingId")]
+        public string MeetingId { get; set; }
+        [JsonProperty("invitations")]
+        public IEnumerable<string> Invitations { get; set; }
     }
 }

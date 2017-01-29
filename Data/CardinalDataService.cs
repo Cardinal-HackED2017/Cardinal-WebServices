@@ -80,6 +80,17 @@ namespace cardinal_webservices.Data
             await _cardinalDbContext.SaveChangesAsync();
         }
 
+        public async Task DeleteInvitationAsync(string invitationId) 
+        {
+            var invitation = _cardinalDbContext.Invitations.Where(i => i.InvitationId == invitationId).FirstOrDefault();
+
+            if (invitation != null) 
+            {
+                _cardinalDbContext.Invitations.Remove(invitation);
+                await _cardinalDbContext.SaveChangesAsync();
+            }
+        }
+
         public IEnumerable<User> GetUsersForMeeting(string meetingId) 
         {
             var userIdsInMeeting = GetMeetingParticipations().Where(p => p.MeetingId == meetingId)

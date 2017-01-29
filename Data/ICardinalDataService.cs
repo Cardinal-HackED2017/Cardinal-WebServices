@@ -29,6 +29,8 @@ namespace cardinal_webservices.Data
         Task UpsertMeetingTimeAsync(MeetingTime meetingTime);
 
         Task UpsertInvitationAsync(Invitation invitation);
+        
+        Task DeleteInvitationAsync(string invitationId);
 
         IEnumerable<User> GetUsersForMeeting(string meetingId);
 
