@@ -25,5 +25,9 @@ namespace cardinal_webservices.Data
         Task UpsertUserAsync(User user);
 
         Task UpsertMeetingTimeAsync(MeetingTime meetingTime);
+
+        IEnumerable<User> GetUsersForMeeting(string meetingId);
+
+        IEnumerable<Meeting> GetMeetingsForUser(string userId);
     }
 }
