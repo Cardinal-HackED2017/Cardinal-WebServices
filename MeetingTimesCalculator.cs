@@ -6,16 +6,19 @@ using cardinal_webservices.GoogleCalendar;
 using cardinal_webservices.Models;
 using cardinal_webservices.DataModels;
 using System;
+using cardinal_webservices.WebSockets;
 
 namespace cardinal_webservices 
 {
     public class MeetingTimesCalculator 
     {
         private readonly ICardinalDataService _cardinalDataService;
+        private readonly CardinalEventManager _eventManager;
 
-        public MeetingTimesCalculator(ICardinalDataService cardinalDataService) 
+        public MeetingTimesCalculator(ICardinalDataService cardinalDataService, CardinalEventManager eventManager) 
         {
             _cardinalDataService = cardinalDataService;
+            _eventManager = eventManager;
         }
 
         public async void ProcessUserJoinMeeting(string meetingId, string userId, string userCalendarToken) 
@@ -59,6 +62,8 @@ namespace cardinal_webservices
                     startTime.Add(meeting.Length);
                 }
             }
+
+            _eventManager.OnMeetingTimesUpdated(meetingId);
 
         }   
 
