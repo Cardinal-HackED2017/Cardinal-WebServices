@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using cardinal_webservices.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using cardinal_webservices.WebSockets;
 
 namespace cardinal_webservices
@@ -42,7 +37,6 @@ namespace cardinal_webservices
 
             services.AddScoped<ICardinalDataService, CardinalDataService>();
             services.AddSingleton<CardinalEventManager>();
-
             // Add framework services.
             services.AddMvc();
             services.AddCors();
@@ -59,6 +53,7 @@ namespace cardinal_webservices
                        .AllowAnyOrigin()
                        .AllowAnyMethod()
             );
+            app.UseWebSockets();
             app.UseMvc();
         }
     }
