@@ -21,7 +21,7 @@ namespace cardinal_webservices
             _eventManager = eventManager;
         }
 
-        public async void ProcessUserJoinMeeting(string meetingId, string userId, string userCalendarToken) 
+        public async Task ProcessUserJoinMeeting(string meetingId, string userId, string userCalendarToken) 
         {
             var meeting = _cardinalDataService.GetMeetings().Where(m => m.Id == meetingId).First();
             var userEvents = await GetUserEvents(userId, userCalendarToken);
@@ -90,14 +90,8 @@ namespace cardinal_webservices
         {  
             var calendarService = GetCalendarService(userCalendarToken);
             var calendars = await calendarService.GetCalendarsAsync();
-            var events = new List<Event>();
 
-            foreach (var cal in calendars) 
-            {
-                events.AddRange(await calendarService.GetEventsAsync(cal.Id));
-            }
-
-            return events;
+           return await calendarService.GetEventsAsync(calendars.First().Id);
         } 
 
         private GoogleCalendarService GetCalendarService(string token)

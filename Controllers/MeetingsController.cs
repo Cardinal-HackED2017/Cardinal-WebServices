@@ -58,7 +58,7 @@ namespace cardinal_webservices.Controllers
             };
 
             await _cardinalDataService.UpsertMeetingParticipationAsync(meetingParticipation);
-            _meetingTimesCalculator.ProcessUserJoinMeeting(meetingId, userId, this.GetAuthToken());
+            await _meetingTimesCalculator.ProcessUserJoinMeeting(meetingId, userId, this.GetAuthToken());
         }
     }
 }
