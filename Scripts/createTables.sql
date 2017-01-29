@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS Meeting_Times CASCADE;
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS Messages CASCADE;
 DROP TABLE IF EXISTS Attendees CASCADE;
+DROP TABLE IF EXISTS Invitations CASCADE;
 
 CREATE TABLE Users (
     user_id text
@@ -54,4 +55,12 @@ CREATE TABLE Attendees (
     ,PRIMARY KEY (meeting_id, user_id)
     ,FOREIGN KEY (meeting_id) REFERENCES Meetings
     ,FOREIGN KEY (user_id) REFERENCES Users
+);
+
+CREATE TABLE Invitations (
+    invitation_id text
+    ,meeting_id text
+    ,user_id text
+    ,PRIMARY KEY (invitation_id)
+    ,FOREIGN KEY (meeting_id) REFERENCES Meetings
 );

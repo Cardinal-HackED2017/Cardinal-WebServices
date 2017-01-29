@@ -40,6 +40,11 @@ namespace cardinal_webservices.Data
             return _cardinalDbContext.Users;
         }
 
+        public IEnumerable<Invitation> GetInvitations() 
+        {
+            return _cardinalDbContext.Invitations;
+        }
+
         public async Task UpsertMeetingAsync(Meeting meeting)
         {
             _cardinalDbContext.Meetings.Add(meeting);
@@ -69,6 +74,12 @@ namespace cardinal_webservices.Data
             await _cardinalDbContext.SaveChangesAsync();
         }
 
+        public async Task UpsertInvitationAsync(Invitation invitation) 
+        {
+            _cardinalDbContext.Invitations.Add(invitation);
+            await _cardinalDbContext.SaveChangesAsync();
+        }
+
         public IEnumerable<User> GetUsersForMeeting(string meetingId) 
         {
             var userIdsInMeeting = GetMeetingParticipations().Where(p => p.MeetingId == meetingId)
@@ -90,6 +101,11 @@ namespace cardinal_webservices.Data
         public IEnumerable<MeetingTime> GetMeetingTimesForMeeting(string meetingId) 
         {
             return GetMeetingTimes().Where(t => t.MeetingId == meetingId).ToList();
+        }
+
+        public IEnumerable<Invitation> GetInvitationsForUser(string userId) 
+        {
+            return GetInvitations().Where(i => i.UserId == userId).ToList();
         }
     }
 }

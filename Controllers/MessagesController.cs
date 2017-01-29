@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using cardinal_webservices.Data;
 using cardinal_webservices.DataModels;
+using cardinal_webservices.Models;
 using cardinal_webservices.WebSockets;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,11 +24,19 @@ namespace cardinal_webservices.Controllers
         }
 
         [HttpGet("meetings/{meetingid}/messages")]
-        public IEnumerable<Message> Get(string meetingid)
+        public IEnumerable<MessageModel> Get(string meetingid)
         {
             return _cardinalDataService.GetMessages()
+                                       .ToList()
                                        .Where(x => x.MeetingId.Equals(meetingid))
+                                       .Select(FromMessage)
                                        .ToList();
+        }
+
+        private MessageModel FromMessage(Message message) 
+        {
+            var user = _cardinalDataService.GetUsers().Where(u => u.Id == message.UserId).First();
+            return new MessageModel(message, user);
         }
 
         [HttpPost("meetings/{meetingid}/messages")]
