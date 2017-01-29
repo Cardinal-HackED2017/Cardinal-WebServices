@@ -33,7 +33,6 @@ CREATE TABLE Meetings(
 CREATE TABLE Meeting_Times (
     meeting_time_id text
     ,start_time timestamp
-    ,length interval
     ,meeting_id text
     ,PRIMARY KEY(start_time, meeting_id)
     ,FOREIGN KEY (meeting_id) REFERENCES Meetings ON DELETE CASCADE

@@ -13,7 +13,5 @@ namespace cardinal_webservices.DataModels
         public string MeetingId { get; set; }
         [Column("start_time")]
         public DateTime StartTime { get; set; }
-        [Column("length")]
-        public TimeSpan length {get; set;}
     }
 }
