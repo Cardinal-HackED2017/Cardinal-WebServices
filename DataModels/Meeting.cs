@@ -4,14 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cardinal_webservices.DataModels 
 {
-    [Table("Meetings")]
+    [Table("meetings")]
     public class Meeting 
     {
         [Key, Column("meeting_id")]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         [Column("name")]
         public string Name { get; set; }
-        [Column("created_time")]
+        [Column("create_time")]
         public DateTime CreatedTime { get; set; }
         [Column("start_fence")]
         public DateTime StartFence { get; set; }

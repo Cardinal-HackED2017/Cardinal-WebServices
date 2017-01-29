@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using cardinal_webservices.Data;
+using cardinal_webservices.DataModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cardinal_webservices.Controllers
@@ -19,9 +20,9 @@ namespace cardinal_webservices.Controllers
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<Test> Get()
+        public IEnumerable<Meeting> Get()
         {
-            return _cardinalDataService.GetTestItems();
+            return _cardinalDataService.GetMeetings();
         }
 
         // GET api/values/5

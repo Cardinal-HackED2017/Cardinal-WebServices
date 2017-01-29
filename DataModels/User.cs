@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cardinal_webservices.DataModels 
 {
-    [Table("Users")]
+    [Table("users")]
     public class User 
     {
         [Key, Column("user_id")]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         [Column("display_name")]
         public string DisplayName { get; set; }
         [Column("email")]
