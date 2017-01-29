@@ -27,6 +27,7 @@ namespace cardinal_webservices.Controllers
         public IEnumerable<MessageModel> Get(string meetingid)
         {
             return _cardinalDataService.GetMessages()
+                                       .ToList()
                                        .Where(x => x.MeetingId.Equals(meetingid))
                                        .Select(FromMessage)
                                        .ToList();
