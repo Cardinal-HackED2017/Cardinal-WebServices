@@ -16,6 +16,6 @@ namespace cardinal_webservices.DataModels
         [Column("content")]
         public string content {get; set; }
         [Column("created_time")]
-        public DateTime CreatedTime;
+        public DateTime CreatedTime{get; set;}
     }
 }

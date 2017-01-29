@@ -26,7 +26,7 @@ namespace cardinal_webservices.Controllers
         }
 
         [HttpPost("messages")]
-        public async Task<IActionResult> CreateMessage(Message message) 
+        public async Task<IActionResult> CreateMessage([FromBody]Message message) 
         {
             message.MessageId = Guid.NewGuid().ToString();
             message.CreatedTime = DateTime.Now;
