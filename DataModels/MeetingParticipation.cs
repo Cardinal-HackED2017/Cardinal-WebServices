@@ -9,7 +9,7 @@ namespace cardinal_webservices.DataModels
     {
         [Key, Column("meeting_id")]
         public string MeetingId { get; set; }
-        [Key, Column("user_id")]
+        [ForeignKey("users"), Column("user_id")]
         public string UserId { get; set; }
     }
 }
