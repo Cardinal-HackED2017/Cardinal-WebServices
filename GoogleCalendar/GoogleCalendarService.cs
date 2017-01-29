@@ -20,21 +20,19 @@ namespace cardinal_webservices.GoogleCalendar
         public async Task<IEnumerable<Calendar>> GetCalendarsAsync() 
         {
             var httpClient = GetHttpClient();
-            var calendarsListResponse = httpClient.GetAsync("/users/me/calendarList");
+            var calendarsListResponse = httpClient.GetAsync("https://www.googleapis.com/calendar/v3/users/me/calendarList");
             var resultJson = await calendarsListResponse.Result.Content.ReadAsStringAsync();
-            Console.WriteLine(resultJson);
 
-            return JsonConvert.DeserializeObject<IEnumerable<Calendar>>(resultJson);
+            return JsonConvert.DeserializeObject<CalendarsResponseWrapper>(resultJson).Items;
         }
 
         public async Task<IEnumerable<Event>> GetEventsAsync(string calendarId) 
         {
             var httpClient = GetHttpClient();
-            var calendarsListResponse = httpClient.GetAsync($"/calendars/{calendarId}/events");
+            var calendarsListResponse = httpClient.GetAsync($"https://www.googleapis.com/calendar/v3/calendars/{calendarId}/events");
             var resultJson = await calendarsListResponse.Result.Content.ReadAsStringAsync();
-            Console.WriteLine(resultJson);
 
-            return JsonConvert.DeserializeObject<IEnumerable<Event>>(resultJson);;
+            return JsonConvert.DeserializeObject<EventsResponseWrapper>(resultJson).Items;
         }
 
         public HttpClient GetHttpClient() 

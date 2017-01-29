@@ -32,10 +32,16 @@ namespace cardinal_webservices.WebSockets
                                        .Any();
         }
 
+        public MessageCreatedEvent GetMessageCreatedEvent(Message message)
+        {
+            var user = _cardinalDataService.GetUsers().Where(u => u.Id == message.UserId).First();
+            return MessageCreatedEvent.FromMessage(new MessageModel(message, user));
+        }
+
         public async void OnMessageCreated(Message message) 
         {
             var sendTasks = _sockets.Where(s => IsUserInMeeting(s.UserId, message.MeetingId))
-                                    .Select(s => s.SendObjectAsync(MessageCreatedEvent.FromMessage(message)));
+                                    .Select(s => s.SendObjectAsync(GetMessageCreatedEvent(message)));
 
             await Task.WhenAll(sendTasks);
         }

@@ -9,6 +9,7 @@ namespace cardinal_webservices.Models
     {
         public IEnumerable<MeetingTimeModel> suggestedTimes {get; set;}
         public string name {get; set;}
+        public string CreatorId { get; set; }
         public string description {get; set;}
         public string Id {get; set;}
         public DateTime createdTime {get; set;}
@@ -23,6 +24,7 @@ namespace cardinal_webservices.Models
         public MeetingModel(Meeting meeting, IEnumerable<User> usersRemote, IEnumerable<MeetingTime> meetingTimes)
         {
             name = meeting.Name;
+            CreatorId = meeting.CreatorId;
             description = meeting.Description;
             Id = meeting.Id;
             createdTime = meeting.CreatedTime;

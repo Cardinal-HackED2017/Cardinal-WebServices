@@ -4,8 +4,16 @@ DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS Messages CASCADE;
 DROP TABLE IF EXISTS Attendees CASCADE;
 
+CREATE TABLE Users (
+    user_id text
+    ,display_name text
+    ,email text
+    ,PRIMARY KEY (user_id)
+);
+
 CREATE TABLE Meetings(
     meeting_id text
+    ,creator_id text
     ,name text
     ,description text
     ,create_time timestamp
@@ -18,6 +26,7 @@ CREATE TABLE Meetings(
     ,latitude real 
     ,location_description text
     ,PRIMARY KEY(meeting_id)
+    ,FOREIGN KEY (creator_id) REFERENCES Users ON DELETE CASCADE
 );
 
 CREATE TABLE Meeting_Times (
@@ -26,13 +35,6 @@ CREATE TABLE Meeting_Times (
     ,meeting_id text
     ,PRIMARY KEY(start_time, meeting_id)
     ,FOREIGN KEY (meeting_id) REFERENCES Meetings ON DELETE CASCADE
-);
-
-CREATE TABLE Users (
-    user_id text
-    ,display_name text
-    ,email text
-    ,PRIMARY KEY (user_id)
 );
 
 CREATE TABLE Messages (

@@ -21,6 +21,22 @@ namespace cardinal_webservices.WebSockets
             await SendAsync(serializedObject);
         }
 
+        public async Task ReceiveWhileConnectionIsOpenAsync() 
+        {
+            try 
+            {
+                while (_websocket.State == WebSocketState.Open) 
+                {
+                    var buffer = new byte[1024];
+                    var seg = new ArraySegment<byte>(buffer);
+                    var incoming = await _websocket.ReceiveAsync(seg, CancellationToken.None);
+                }
+            } 
+            catch 
+            {
+            }
+        }
+
         public async Task SendAsync(string message)
         {
             if (_websocket.State == WebSocketState.Open) 

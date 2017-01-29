@@ -1,8 +1,15 @@
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace cardinal_webservices.GoogleCalendar 
 {
+    public class EventsResponseWrapper 
+    {
+        [JsonProperty("items")]
+        public IEnumerable<Event> Items { get; set;}
+    }
+
     public class Event 
     {
         [JsonProperty("id")]

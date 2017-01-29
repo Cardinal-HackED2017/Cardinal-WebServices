@@ -7,7 +7,7 @@ namespace cardinal_webservices.Models
     {
         public string content {get; set;}
         public DateTime creationTime {get; set;}
-        public string userName {get; set;}
+        public UserModel author {get; set;}
         public string messageId {get; set;}
         public string meetingId {get; set;}
 
@@ -16,7 +16,7 @@ namespace cardinal_webservices.Models
         {
             content = message.content;
             creationTime = message.CreatedTime;
-            userName = user.DisplayName;
+            author = new UserModel(user);
             messageId = message.MessageId;
             meetingId = message.MeetingId;
         }

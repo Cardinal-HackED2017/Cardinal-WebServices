@@ -38,6 +38,7 @@ namespace cardinal_webservices.Controllers
         public async Task<IActionResult> CreateMeeting([FromBody] Meeting meeting) 
         {
             meeting.Id = Guid.NewGuid().ToString();
+            meeting.CreatorId = this.GetCallingUserId();
             meeting.CreatedTime = DateTime.Now;
 
             await _cardinalDataService.UpsertMeetingAsync(meeting);

@@ -9,6 +9,8 @@ namespace cardinal_webservices.DataModels
     {
         [Key, Column("meeting_id")]
         public string Id { get; set; }
+        [Column("creator_id"), ForeignKey("users")]
+        public string CreatorId { get; set; }
         [Column("name")]
         public string Name { get; set; }
         [ColumnAttribute("description")]
