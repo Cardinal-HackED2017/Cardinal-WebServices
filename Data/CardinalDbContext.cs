@@ -7,6 +7,8 @@ namespace cardinal_webservices.Data
     {
         public DbSet<Meeting> Meetings { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
         public CardinalDbContext(DbContextOptions<CardinalDbContext> options) : base(options) {}
     }
 }
