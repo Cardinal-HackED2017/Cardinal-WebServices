@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using cardinal_webservices.Data;
 using cardinal_webservices.DataModels;
 using cardinal_webservices.Events;
+using cardinal_webservices.Models;
 
 namespace cardinal_webservices.WebSockets 
 {
@@ -36,15 +37,27 @@ namespace cardinal_webservices.WebSockets
 
         public async void OnUserJoined(User user, Meeting meeting)
         {
-            var sendTasks = _sockets.Where( s=> IsUserInMeeting(s.UserId, meeting.Id))
+            var sendTasks = _sockets.Where(s => IsUserInMeeting(s.UserId, meeting.Id))
                                     .Select(s => s.SendObjectAsync(UserJoinedEvent.FromUser(user)));
 
             await Task.WhenAll(sendTasks);
         }
 
+        public MeetingTimesUpdated GetMeetingTimesUpdatedEvent(string meetingId) 
+        {
+            var meeting = _cardinalDataService.GetMeetings().Where(m => m.Id == meetingId).First();
+            var meetingTimesForMeeting = _cardinalDataService.GetMeetingTimesForMeeting(meetingId);
+            var meetingTimeModels = meetingTimesForMeeting.Select(m => new MeetingTimeModel(m, meeting));
+
+            return MeetingTimesUpdated.FromMeetingTimes(meetingTimeModels);
+        }
+
         public async void OnMeetingTimesUpdated(string meetingId) 
         {
+            var sendTasks = _sockets.Where(s => IsUserInMeeting(s.UserId, meetingId))
+                                    .Select(s => s.SendObjectAsync(GetMeetingTimesUpdatedEvent(meetingId));
 
+            await Task.WhenAll(sendTasks);
         }
     }
 }
