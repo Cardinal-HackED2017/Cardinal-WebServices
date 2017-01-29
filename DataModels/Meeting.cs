@@ -18,7 +18,7 @@ namespace cardinal_webservices.DataModels
         [Column("end_fence")]
         public DateTime EndFence { get; set; }
         [Column("length")]
-        public DateTime Length { get; set; }
+        public TimeSpan Length { get; set; }
         [Column("longitude")]
         public double Longitude { get; set; }
         [Column("latitude")]
