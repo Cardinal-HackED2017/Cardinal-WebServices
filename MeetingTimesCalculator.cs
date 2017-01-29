@@ -28,7 +28,7 @@ namespace cardinal_webservices
                     dayStart = meeting.dayStart,
                     dayEnd = meeting.dayEnd,
                     lengthOfMeeting = meeting.Length,
-                    events = userEvents.ToList()
+                    events = _cardinalDataService.GetUserEvents().Where(e => e.meetingId == meetingId).Select(e => UserEventModel.UserEventModelFromUserEvent(e)).ToList()
             };
         }   
 
