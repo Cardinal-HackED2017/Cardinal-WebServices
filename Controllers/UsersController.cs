@@ -19,12 +19,6 @@ namespace cardinal_webservices.Controllers
             _cardinalDataService = cardinalDataService;
         }
 
-        [HttpGet("users")]
-        public IEnumerable<User> Get()
-        {
-            return _cardinalDataService.GetUsers();
-        }
-
         [HttpPost("users")]
         public async Task<IActionResult> CreateUser([FromBody]User user) 
         {
