@@ -78,7 +78,7 @@ namespace cardinal_webservices.Models
             var tempEvents = (events.OrderByDescending(x => x.timeSlot.start)
                                                                     .Select(x => x.timeSlot).ToList());
             
-            foreach(TimeSlotModel t in tempEvents)
+            /*foreach(TimeSlotModel t in tempEvents)
             {
                 if (t.start.TimeOfDay < dayStart)
                 {
@@ -88,7 +88,7 @@ namespace cardinal_webservices.Models
                 {
                     t.length = t.length - (t.end().TimeOfDay - dayEnd);
                 }
-            }
+            }*/
             tempEvents.Reverse();
             bool delta = true;
             
@@ -169,7 +169,7 @@ namespace cardinal_webservices.Models
             }
         }
         
-       /* public void testConsolidation()
+        /*public void testConsolidation()
         {
             this.dayStart = new TimeSpan(8, 0, 0);// 8:00 a,
             this.dayEnd = new TimeSpan(18,0,0);
